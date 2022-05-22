@@ -2,7 +2,9 @@ package com.example.demo.bean;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -33,6 +35,8 @@ public class Post {
 
 	private String content;
 	
+	private String imagName;
+	
 	@OneToMany(mappedBy="image",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<File> posts = new ArrayList<>();
 
@@ -43,5 +47,8 @@ public class Post {
 
 	@ManyToOne
 	private User user;
+	
+	@OneToMany(mappedBy = "post" , cascade = CascadeType.ALL)
+	private Set<Comment> comments = new HashSet<Comment>();
 
 }
