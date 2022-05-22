@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "spring.profile-testing-key",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.profile-testing-key'"
+  },
+  {
+    "name": "app.name",
+    "type": "java.lang.String",
+    "description": "A description for 'app.name'"
+  }
+]}
