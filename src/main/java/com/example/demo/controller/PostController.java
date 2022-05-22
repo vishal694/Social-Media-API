@@ -1,14 +1,10 @@
 package com.example.demo.controller;
 
-import java.awt.Image;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
