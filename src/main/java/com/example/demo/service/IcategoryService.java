@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.example.demo.payloads.CategoryDto;
 
-public interface IcategoryService {
+public interface ICategoryService {
 	
 	CategoryDto createCategory(CategoryDto category);
 	

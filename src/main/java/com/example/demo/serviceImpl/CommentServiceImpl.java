@@ -9,22 +9,22 @@ import com.example.demo.bean.Post;
 import com.example.demo.bean.User;
 import com.example.demo.exception.ResourceNotException;
 import com.example.demo.payloads.CommentDto;
-import com.example.demo.repo.IcommentRepo;
-import com.example.demo.repo.IpostRepo;
-import com.example.demo.repo.IuserRepo;
-import com.example.demo.service.IcommentService;
+import com.example.demo.repo.ICommentRepo;
+import com.example.demo.repo.IPostRepo;
+import com.example.demo.repo.IUserRepo;
+import com.example.demo.service.ICommentService;
 
 @Service
-public class CommentServiceImpl implements IcommentService {
+public class CommentServiceImpl implements ICommentService {
 
 	@Autowired
-	private IpostRepo postRepo;
+	private IPostRepo postRepo;
 
 	@Autowired
-	private IcommentRepo commentRepo;
+	private ICommentRepo commentRepo;
 
 	@Autowired
-	private IuserRepo userRepo;
+	private IUserRepo userRepo;
 
 	@Autowired
 	private ModelMapper modelMapper;

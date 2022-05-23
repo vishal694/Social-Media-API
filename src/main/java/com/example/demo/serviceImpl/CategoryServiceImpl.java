@@ -10,14 +10,14 @@ import org.springframework.stereotype.Service;
 import com.example.demo.bean.Category;
 import com.example.demo.exception.ResourceNotException;
 import com.example.demo.payloads.CategoryDto;
-import com.example.demo.repo.IcategoryRepo;
-import com.example.demo.service.IcategoryService;
+import com.example.demo.repo.ICategoryRepo;
+import com.example.demo.service.ICategoryService;
 
 @Service
-public class CategoryServiceImpl implements IcategoryService {
+public class CategoryServiceImpl implements ICategoryService {
 
 	@Autowired
-	private IcategoryRepo categoryRepo;
+	private ICategoryRepo categoryRepo;
 
 	@Autowired
 	private ModelMapper modelMapper;

@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.payloads.UserDto;
-import com.example.demo.service.IuserService;
+import com.example.demo.service.IUserService;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 	
 	@Autowired
-	private IuserService userService;
+	private IUserService userService;
 	
 	@PostMapping("/create-Users")
 	public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto){

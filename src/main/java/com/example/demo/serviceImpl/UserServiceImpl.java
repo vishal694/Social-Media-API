@@ -9,15 +9,15 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.bean.User;
 import com.example.demo.payloads.UserDto;
-import com.example.demo.repo.IuserRepo;
-import com.example.demo.service.IuserService;
+import com.example.demo.repo.IUserRepo;
+import com.example.demo.service.IUserService;
 import com.example.demo.exception.ResourceNotException;
 
 @Service
-public class UserServiceImpl implements IuserService {
+public class UserServiceImpl implements IUserService {
 
 	@Autowired
-	private IuserRepo userRepo;
+	private IUserRepo userRepo;
 	
 	@Autowired
 	private ModelMapper modelMapper;

@@ -25,18 +25,18 @@ import com.example.demo.commons.AppConstants;
 import com.example.demo.payloads.ApiResponse;
 import com.example.demo.payloads.PostDto;
 import com.example.demo.payloads.PostResponse;
-import com.example.demo.service.IfileService;
-import com.example.demo.service.IpostService;
+import com.example.demo.service.IFileService;
+import com.example.demo.service.IPostService;
 
 @RestController
 @RequestMapping("/api/posts")
 public class PostController {
 
 	@Autowired
-	private IpostService postService;
+	private IPostService postService;
 
 	@Autowired
-	private IfileService fileService;
+	private IFileService fileService;
 
 	@Value("${project.image}")
 	private String path;

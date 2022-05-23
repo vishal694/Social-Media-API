@@ -11,7 +11,7 @@ import com.example.demo.bean.Category;
 import com.example.demo.bean.Post;
 import com.example.demo.bean.User;
 
-public interface IpostRepo extends JpaRepository<Post, Integer> {
+public interface IPostRepo extends JpaRepository<Post, Integer> {
 
 	List<Post> findByUser(User user);
 

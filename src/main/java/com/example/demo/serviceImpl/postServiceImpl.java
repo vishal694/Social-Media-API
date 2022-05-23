@@ -24,29 +24,29 @@ import com.example.demo.exception.FileStorageException;
 import com.example.demo.exception.ResourceNotException;
 import com.example.demo.payloads.PostDto;
 import com.example.demo.payloads.PostResponse;
-import com.example.demo.repo.IcategoryRepo;
-import com.example.demo.repo.IfileRepo;
-import com.example.demo.repo.IpostRepo;
-import com.example.demo.repo.IuserRepo;
-import com.example.demo.service.IpostService;
+import com.example.demo.repo.ICategoryRepo;
+import com.example.demo.repo.IFileRepo;
+import com.example.demo.repo.IPostRepo;
+import com.example.demo.repo.IUserRepo;
+import com.example.demo.service.IPostService;
 
 @Service
-public class postServiceImpl implements IpostService {
+public class postServiceImpl implements IPostService {
 
 	@Autowired
-	private IpostRepo postRepo;
+	private IPostRepo postRepo;
 
 	@Autowired
 	private ModelMapper modelMapper;
 
 	@Autowired
-	private IuserRepo userRepo;
+	private IUserRepo userRepo;
 
 	@Autowired
-	private IcategoryRepo categoryRepo;
+	private ICategoryRepo categoryRepo;
 	
 	@Autowired
-	private IfileRepo fileRepo;
+	private IFileRepo fileRepo;
 
 	@Override
 	public PostDto createPost(PostDto postDto, Integer userId, Integer categoryId) {

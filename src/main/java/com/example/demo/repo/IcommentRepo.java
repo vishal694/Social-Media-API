@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.bean.Comment;
 
-public interface IcommentRepo extends JpaRepository<Comment, Integer> {
+public interface ICommentRepo extends JpaRepository<Comment, Integer> {
 
 }

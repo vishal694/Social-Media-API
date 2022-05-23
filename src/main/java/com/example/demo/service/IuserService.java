@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.example.demo.payloads.UserDto;
 
-public interface IuserService {
+public interface IUserService {
 
 	UserDto createuser(UserDto userdto);
 	

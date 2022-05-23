@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.payloads.CategoryDto;
-import com.example.demo.service.IcategoryService;
+import com.example.demo.service.ICategoryService;
 
 @RestController
 @RequestMapping("/api/categories")
 public class CategoryController {
 
 	@Autowired
-	private IcategoryService categoryService;
+	private ICategoryService categoryService;
 	
 	@PostMapping("/create-category")
 	public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryDto categoryDto){

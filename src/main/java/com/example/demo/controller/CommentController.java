@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.payloads.CommentDto;
-import com.example.demo.service.IcommentService;
+import com.example.demo.service.ICommentService;
 
 @RestController
 @RequestMapping("/api/comments")
 public class CommentController {
 
 	@Autowired
-	private IcommentService commService;
+	private ICommentService commService;
 
 	@PostMapping("/{postId}/{userId}/add-comment")
 	public ResponseEntity<CommentDto> createPost(@RequestBody CommentDto commentDto,

@@ -11,10 +11,10 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.demo.service.IfileService;
+import com.example.demo.service.IFileService;
 
 @Service
-public class FileServiceImpl implements IfileService {
+public class FileServiceImpl implements IFileService {
 
 	@Override
 	public String uploadImage(String path, MultipartFile file) throws IOException {

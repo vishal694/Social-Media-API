@@ -5,7 +5,7 @@ import java.util.List;
 import com.example.demo.payloads.PostDto;
 import com.example.demo.payloads.PostResponse;
 
-public interface IpostService {
+public interface IPostService {
 
 	PostDto createPost(PostDto postDto,Integer userId ,Integer categoryId);
 	

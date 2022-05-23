@@ -2,7 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.payloads.CommentDto;
 
-public interface IcommentService {
+public interface ICommentService {
 	
 	CommentDto createComments(CommentDto commentDto,Integer postId,Integer userId);
 	
