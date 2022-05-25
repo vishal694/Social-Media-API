@@ -45,7 +45,7 @@ public class CommentServiceImpl implements ICommentService {
 
 	@Override
 	public void deleteComments(Integer cId, Integer userId) {
-		User user = this.userRepo.findById(userId)
+		this.userRepo.findById(userId)
 				.orElseThrow(() -> new ResourceNotException("user", "user Id", userId));
 		Comment comment = this.commentRepo.findById(cId)
 				.orElseThrow(() -> new ResourceNotException("Comment", "Comment Id", cId));

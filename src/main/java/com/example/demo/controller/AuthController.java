@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.bean.JwtAuthRequest;
 import com.example.demo.blog.security.JwtAuthResponse;
 import com.example.demo.blog.security.JwtTokenHelper;
+import com.example.demo.exception.ApiException;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -32,14 +33,13 @@ public class AuthController {
 	private AuthenticationManager authenticationManager;
 
 	@PostMapping("/login")
-	public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest jwtAuthRequest)throws Exception {
+	public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest jwtAuthRequest) throws Exception {
 		try {
-		this.authenticate(jwtAuthRequest.getUserName(), jwtAuthRequest.getPassword());
-		
-		}catch (DisabledException e) {
+			this.authenticate(jwtAuthRequest.getUserName(), jwtAuthRequest.getPassword());
+
+		} catch (DisabledException e) {
 			throw new Exception("USER_DISABLED", e);
-		}
-		catch (BadCredentialsException e) {
+		} catch (BadCredentialsException e) {
 			throw new Exception("INVALID_CREDENTIALS", e);
 		}
 
@@ -55,7 +55,10 @@ public class AuthController {
 	private void authenticate(String userName, String password) {
 		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 				userName, password);
-
-		this.authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+		try {
+			this.authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+		} catch (BadCredentialsException e) {
+			throw new ApiException("Invalid userName or Password! ");
+		}
 	}
 }
