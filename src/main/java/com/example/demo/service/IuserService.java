@@ -12,10 +12,12 @@ public interface IUserService {
 	
 	UserDto getUserbyId(Integer userId);
 	
-	List<UserDto> getAllUsers();
+	List<UserDto> getAllUsers(String email);
 	
-	void deleteUser(Integer userId);
+	void deleteUser(Integer userId,String email);
 	
 	UserDto registerNewUser(UserDto user);
+	
+	boolean checkRole(String email);
 	
 }

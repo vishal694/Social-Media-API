@@ -67,17 +67,21 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public List<UserDto> getAllUsers() {
+	public List<UserDto> getAllUsers(String email) {
 		List<User> list = this.userRepo.findAll();
-		List<UserDto> userdtos = list.stream().map(user -> this.userTODto(user)).collect(Collectors.toList());
+		List<UserDto> userdtos = checkRole(email)
+				? list.stream().map(user -> this.userTODto(user)).collect(Collectors.toList())
+				: null;
 		return userdtos;
+
 	}
 
 	@Override
-	public void deleteUser(Integer userId) {
-
-		this.userRepo.findById(userId).orElseThrow(() -> new ResourceNotException("user", "User Id", userId));
-		this.userRepo.deleteById(userId);
+	public void deleteUser(Integer userId, String email) {
+		if (checkRole(email)) {
+			this.userRepo.findById(userId).orElseThrow(() -> new ResourceNotException("user", "User Id", userId));
+			this.userRepo.deleteById(userId);
+		}
 
 	}
 
@@ -114,6 +118,14 @@ public class UserServiceImpl implements IUserService {
 		User newUser = this.userRepo.save(user);
 
 		return this.modelMapper.map(newUser, UserDto.class);
+	}
+
+	@Override
+	public boolean checkRole(String email) {
+		if (userRepo.findRoleByEmail(email).equals(AppConstants.ADMIN_ROLE)) {
+			return true;
+		}
+		return false;
 	}
 
 }

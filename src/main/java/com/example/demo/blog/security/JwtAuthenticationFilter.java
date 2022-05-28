@@ -41,6 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			token = requestedToken.substring(7);
 			try {
 				userName = this.jwtTokenHelper.getUsernameFromToken(token);
+
 			} catch (IllegalArgumentException e1) {
 				e1.printStackTrace();
 			} catch (ExpiredJwtException e2) {
@@ -59,7 +60,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 						userDetails, null, userDetails.getAuthorities());
 				usernamePasswordAuthenticationToken
 						.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
+				
+				request.getSession().setAttribute("Email",userName);
 				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 			} else {
 				System.out.println("Invaild Token");
