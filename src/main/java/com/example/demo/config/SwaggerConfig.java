@@ -22,7 +22,7 @@ public class SwaggerConfig {
 
     private ApiInfo metaData() {
         return new ApiInfoBuilder()
-                .title("Tech Interface - Spring Boot Swagger Configuration")
+                .title("Simple Blog Apis")
                 .description("\"Swagger configuration for application \"")
                 .version("1.1.0")
                 .license("Apache 2.0")

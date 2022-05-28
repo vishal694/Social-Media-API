@@ -18,6 +18,8 @@ import com.example.demo.bean.JwtAuthRequest;
 import com.example.demo.blog.security.JwtAuthResponse;
 import com.example.demo.blog.security.JwtTokenHelper;
 import com.example.demo.exception.ApiException;
+import com.example.demo.payloads.UserDto;
+import com.example.demo.service.IUserService;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -31,6 +33,9 @@ public class AuthController {
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
+
+	@Autowired
+	private IUserService userService;
 
 	@PostMapping("/login")
 	public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest jwtAuthRequest) throws Exception {
@@ -60,5 +65,13 @@ public class AuthController {
 		} catch (BadCredentialsException e) {
 			throw new ApiException("Invalid userName or Password! ");
 		}
+	}
+
+	@PostMapping("/register")
+	public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto) {
+
+		UserDto registeredUser = this.userService.registerNewUser(userDto);
+		return new ResponseEntity<UserDto>(registeredUser, HttpStatus.CREATED);
+
 	}
 }

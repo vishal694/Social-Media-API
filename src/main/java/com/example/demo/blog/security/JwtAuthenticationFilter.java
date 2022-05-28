@@ -48,8 +48,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			} catch (MalformedJwtException e3) {
 				e3.printStackTrace();
 			}
-		} else {
-			System.out.println("JWT begin with Bearer");
 		}
 
 		if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -66,10 +64,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			} else {
 				System.out.println("Invaild Token");
 			}
-		} else {
-			System.out.println("userName is null or context is null");
 		}
-		
+
 		filterChain.doFilter(request, response);
 	}
 

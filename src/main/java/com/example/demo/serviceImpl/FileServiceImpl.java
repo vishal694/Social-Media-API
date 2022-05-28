@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.UUID;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,7 +16,8 @@ import com.example.demo.service.IFileService;
 
 @Service
 public class FileServiceImpl implements IFileService {
-
+	
+	@Async
 	@Override
 	public String uploadImage(String path, MultipartFile file) throws IOException {
 
@@ -41,6 +43,7 @@ public class FileServiceImpl implements IFileService {
 
 	}
 
+	@Async
 	@Override
 	public InputStream getResource(String path, String fileName) throws IOException {
 		String fullPath = path + File.separator + fileName;

@@ -18,4 +18,5 @@ public class UserDto {
 	private String password;
 	private String about;
 	private Set<CommentDto> userComments = new HashSet<CommentDto>();
+	private Set<RoleDto> roles = new HashSet<RoleDto>();
 }

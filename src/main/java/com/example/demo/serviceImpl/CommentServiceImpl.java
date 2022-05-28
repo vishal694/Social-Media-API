@@ -2,6 +2,7 @@ package com.example.demo.serviceImpl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.bean.Comment;
@@ -29,6 +30,7 @@ public class CommentServiceImpl implements ICommentService {
 	@Autowired
 	private ModelMapper modelMapper;
 
+	@Async
 	@Override
 	public CommentDto createComments(CommentDto commentDto, Integer postId, Integer userId) {
 		Post post = this.postRepo.findById(postId)

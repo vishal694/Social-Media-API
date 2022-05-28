@@ -7,4 +7,5 @@ import com.example.demo.bean.User;
 public interface IUserRepo extends JpaRepository<User, Integer> {
 	
 	User findByEmail(String email);
+	
 }

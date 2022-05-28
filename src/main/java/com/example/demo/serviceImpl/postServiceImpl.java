@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,6 +49,7 @@ public class postServiceImpl implements IPostService {
 	@Autowired
 	private IFileRepo fileRepo;
 
+	@Async
 	@Override
 	public PostDto createPost(PostDto postDto, Integer userId, Integer categoryId) {
 
@@ -89,6 +91,7 @@ public class postServiceImpl implements IPostService {
 		this.postRepo.deleteById(postId);
 	}
 
+	@Async
 	@Override
 	public PostResponse getAllPost(Integer pageSize, Integer pageNumber, String sortBy, String sortDir) {
 
@@ -109,6 +112,7 @@ public class postServiceImpl implements IPostService {
 		return postResponse;
 	}
 
+	@Async
 	@Override
 	public List<PostDto> getPostsByCategory(Integer categoryId) {
 		Category cate = this.categoryRepo.findById(categoryId)
@@ -122,6 +126,7 @@ public class postServiceImpl implements IPostService {
 		return postDto;
 	}
 
+	@Async
 	@Override
 	public List<PostDto> getPostByUser(Integer userId) {
 		User user = this.userRepo.findById(userId)
