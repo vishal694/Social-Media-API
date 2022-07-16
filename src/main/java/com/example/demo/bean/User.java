@@ -67,7 +67,6 @@ public class User implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
 		List<SimpleGrantedAuthority> authority = this.roles.stream()
 				.map((role) -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 		return authority;

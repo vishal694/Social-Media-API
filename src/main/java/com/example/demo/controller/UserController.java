@@ -45,7 +45,7 @@ public class UserController {
 
 	@DeleteMapping("/delete-Users/{userId}")
 	public ResponseEntity<?> deleteuser(HttpServletRequest request, @PathVariable("userId") Integer userId) {
-		this.userService.deleteUser(userId,(String) request.getSession().getAttribute("Email"));
+		this.userService.deleteUser(userId, (String) request.getSession().getAttribute("Email"));
 		request.getSession().setAttribute("Email", null);
 		return new ResponseEntity<>(Map.of("message", "user delete successfully"), HttpStatus.OK);
 	}
@@ -56,9 +56,16 @@ public class UserController {
 	}
 
 	@GetMapping("/{userId}")
-	public ResponseEntity<UserDto> getByUsers(@PathVariable("userId") Integer userId) {
+	public ResponseEntity<UserDto> getUsersByID(@PathVariable("userId") Integer userId) {
 		return ResponseEntity.ok(this.userService.getUserbyId(userId));
 
+	}
+
+	@GetMapping("/userName/{name}")
+	public ResponseEntity<List<String>> getUsersByName(@PathVariable("name") String userName,
+			HttpServletRequest request) {
+		return ResponseEntity
+				.ok(this.userService.getUserByName(userName, (String) request.getSession().getAttribute("Email")));
 	}
 
 }

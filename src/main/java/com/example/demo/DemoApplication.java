@@ -1,6 +1,7 @@
 package com.example.demo;
 
-import org.elasticsearch.core.List;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

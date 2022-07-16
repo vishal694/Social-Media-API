@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +15,8 @@ import com.example.demo.payloads.UserDto;
 import com.example.demo.repo.IRoleRepo;
 import com.example.demo.repo.IUserRepo;
 import com.example.demo.service.IUserService;
+
+import reactor.core.publisher.Flux;
 import com.example.demo.exception.ResourceNotException;
 
 @Service
@@ -33,7 +34,7 @@ public class UserServiceImpl implements IUserService {
 	@Autowired
 	private IRoleRepo roleRepo;
 
-	@Async
+//	@Async
 	@Override
 	public UserDto createuser(UserDto userdto) {
 
@@ -42,7 +43,7 @@ public class UserServiceImpl implements IUserService {
 		return this.userTODto(savedUser);
 	}
 
-	@Async
+//	@Async
 	@Override
 	public UserDto updateuser(UserDto userdto, Integer userId) {
 
@@ -50,7 +51,7 @@ public class UserServiceImpl implements IUserService {
 				.orElseThrow(() -> new ResourceNotException("User", "User Id", userId));
 		user.setName(userdto.getName());
 		user.setEmail(userdto.getEmail());
-		user.setPassword(userdto.getPassword());
+ 		user.setPassword(userdto.getPassword());
 		user.setAbout(userdto.getAbout());
 
 		User updateUser = this.userRepo.save(user);
@@ -58,7 +59,7 @@ public class UserServiceImpl implements IUserService {
 		return userDto1;
 	}
 
-	@Async
+	//@Async
 	@Override
 	public UserDto getUserbyId(Integer userId) {
 		User user = this.userRepo.findById(userId)
@@ -67,11 +68,17 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
+	public List<String> getUserByName(String name, String email) {
+		return this.userRepo.findName(name, email);
+	}
+
+	@Override
 	public List<UserDto> getAllUsers(String email) {
 		List<User> list = this.userRepo.findAll();
 		List<UserDto> userdtos = checkRole(email)
 				? list.stream().map(user -> this.userTODto(user)).collect(Collectors.toList())
 				: null;
+
 		return userdtos;
 
 	}
@@ -97,7 +104,6 @@ public class UserServiceImpl implements IUserService {
 
 	private UserDto userTODto(User user) {
 		UserDto userdto = this.modelMapper.map(user, UserDto.class);
-		;
 
 //		userdto.setId(user.getId());
 //		userdto.setName(user.getName());
@@ -126,6 +132,16 @@ public class UserServiceImpl implements IUserService {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public Flux<UserDto> convertListToFlux(List<UserDto> userDto) {
+//		var future = new CompletableFuture<List<UserDto>>();
+//		future.completeAsync(() -> userDto);
+//
+//		Flux<UserDto> flux = Mono.fromFuture(future).flatMapMany(Flux::fromIterable);
+//		return flux;
+		return null;
 	}
 
 }

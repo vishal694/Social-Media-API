@@ -49,7 +49,7 @@ public class postServiceImpl implements IPostService {
 	@Autowired
 	private IFileRepo fileRepo;
 
-	@Async
+//	@Async
 	@Override
 	public PostDto createPost(PostDto postDto, Integer userId, Integer categoryId) {
 
@@ -91,7 +91,7 @@ public class postServiceImpl implements IPostService {
 		this.postRepo.deleteById(postId);
 	}
 
-	@Async
+//	@Async
 	@Override
 	public PostResponse getAllPost(Integer pageSize, Integer pageNumber, String sortBy, String sortDir) {
 
@@ -112,7 +112,7 @@ public class postServiceImpl implements IPostService {
 		return postResponse;
 	}
 
-	@Async
+//	@Async
 	@Override
 	public List<PostDto> getPostsByCategory(Integer categoryId) {
 		Category cate = this.categoryRepo.findById(categoryId)
