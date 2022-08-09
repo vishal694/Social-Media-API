@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -14,16 +12,16 @@ import com.example.demo.bean.ChatMessage;
 public class ChatController {
 
 	@MessageMapping("/chat.register")
-	@SendTo("/topic/{email}")
-	public ChatMessage register(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor,
-			HttpServletRequest request) {
-		headerAccessor.getSessionAttributes().put("username", (String) request.getSession().getAttribute("Email"));
+	@SendTo("/topic/public")
+	public ChatMessage register(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
+		headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
 		return chatMessage;
 	}
 
 	@MessageMapping("/chat.send")
-	@SendTo("/topic/{email}")
+	@SendTo("/topic/public")
 	public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
 		return chatMessage;
 	}
+
 }

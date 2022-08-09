@@ -39,16 +39,20 @@ public class UserRequestImpl implements IUserRequestService {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public String acceptRequest(UserRequestDto userRequestDto, String email) {
 		Integer row = userRequestRepo.acceptRequest(email, userRequestDto.getToEmail());
-		if(row==1) {
+		if (row == 1) {
 			return "accepted";
 		}
 		return "notAccepted";
 	}
 
+	@Override
+	public void rejectRequest(UserRequestDto userRequestDto, String userEmail) {
+		this.userRequestRepo.deleteRequest(userRequestDto.getFromEmail(), userEmail);
+	}
 
 	@Override
 	public List<String> getReceviedRequests(String email) {

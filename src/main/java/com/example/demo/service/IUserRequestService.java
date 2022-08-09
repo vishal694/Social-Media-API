@@ -12,5 +12,7 @@ public interface IUserRequestService {
 	
 	List<String> getsendRequests(String email);
 	
-	String acceptRequest(UserRequestDto userRequestDto,String email);
+	String acceptRequest(UserRequestDto userRequestDto,String userEmail);
+	
+	void rejectRequest(UserRequestDto userRequestDto,String userEmail);
 }

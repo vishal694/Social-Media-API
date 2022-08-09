@@ -28,4 +28,10 @@ public interface IUserRequestRepo extends JpaRepository<UsersRequest, Integer> {
 	@Transactional
 	@Query(value = "UPDATE  USERS_REQUEST SET REQUEST_FLAG = TRUE  WHERE TO_EMAIL =:toEmail AND  FROM_EMAIL =:fromEmail", nativeQuery = true)
 	Integer acceptRequest(String fromEmail,String toEmail);
+	
+	@Modifying
+	@Transactional
+	@Query(value = "DELETE FROM USERS_REQUEST  WHERE FROM_EMAIL =:fromEmail AND TO_EMAIL =:toEmail", nativeQuery = true)
+	void deleteRequest(String fromEmail,String toEmail);
+	
 }

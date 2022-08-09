@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.payloads.UserDto;
 import com.example.demo.service.IUserService;
 
+import reactor.core.publisher.Flux;
+
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -51,7 +53,7 @@ public class UserController {
 	}
 
 	@GetMapping("/")
-	public ResponseEntity<List<UserDto>> getUsers(HttpServletRequest request) {
+	public ResponseEntity<Flux<UserDto>> getUsers(HttpServletRequest request) {
 		return ResponseEntity.ok(this.userService.getAllUsers((String) request.getSession().getAttribute("Email")));
 	}
 

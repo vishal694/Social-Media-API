@@ -1,6 +1,7 @@
 package com.example.demo.serviceImpl;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -17,6 +18,8 @@ import com.example.demo.repo.IUserRepo;
 import com.example.demo.service.IUserService;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
 import com.example.demo.exception.ResourceNotException;
 
 @Service
@@ -73,13 +76,13 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public List<UserDto> getAllUsers(String email) {
+	public Flux<UserDto> getAllUsers(String email) {
 		List<User> list = this.userRepo.findAll();
 		List<UserDto> userdtos = checkRole(email)
 				? list.stream().map(user -> this.userTODto(user)).collect(Collectors.toList())
 				: null;
-
-		return userdtos;
+		Flux<UserDto> getAllFlux = convertListToFlux(userdtos);
+		return getAllFlux;
 
 	}
 
@@ -136,12 +139,11 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public Flux<UserDto> convertListToFlux(List<UserDto> userDto) {
-//		var future = new CompletableFuture<List<UserDto>>();
-//		future.completeAsync(() -> userDto);
-//
-//		Flux<UserDto> flux = Mono.fromFuture(future).flatMapMany(Flux::fromIterable);
-//		return flux;
-		return null;
+		var future = new CompletableFuture<List<UserDto>>();
+		future.completeAsync(() -> userDto);
+
+		Flux<UserDto> flux = Mono.fromFuture(future).flatMapMany(Flux::fromIterable);
+		return flux;
 	}
 
 }
