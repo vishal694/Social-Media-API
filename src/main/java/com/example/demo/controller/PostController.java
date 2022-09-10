@@ -7,6 +7,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.example.demo.bean.LoadFile;
 import com.example.demo.commons.AppConstants;
 import com.example.demo.payloads.ApiResponse;
 import com.example.demo.payloads.PostDto;
@@ -122,4 +126,26 @@ public class PostController {
 		response.setContentType(MediaType.IMAGE_JPEG_VALUE);
 		StreamUtils.copy(resource, response.getOutputStream());
 	}
+
+	@PostMapping("video-upload/{postId}")
+	public ResponseEntity<PostDto> uploadvideo(@RequestParam("video") MultipartFile video, @PathVariable Integer postId)
+			throws IOException {
+		PostDto postDto = this.postService.getPostById(postId);
+		if (postDto == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		String fileName = this.fileService.addFile(video);
+		postDto.setImagName(fileName);
+		return new ResponseEntity<PostDto>(postDto, HttpStatus.OK);
+	}
+
+	@GetMapping("/video-down/{id}")
+	public ResponseEntity<ByteArrayResource> download(@PathVariable String id) throws IOException {
+		LoadFile loadFile = fileService.downloadFile(id);
+
+		return ResponseEntity.ok().contentType(MediaType.parseMediaType(loadFile.getFileType()))
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + loadFile.getFilename() + "\"")
+				.body(new ByteArrayResource(loadFile.getFile()));
+	}
+
 }

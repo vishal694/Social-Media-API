@@ -21,6 +21,7 @@ public class PostDto {
 
 	private Date addDate;
 
+	private byte[] file;
 	
 	private CategoryDto category;
 	
