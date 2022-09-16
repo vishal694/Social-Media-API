@@ -21,9 +21,20 @@ import com.example.demo.exception.ApiException;
 import com.example.demo.payloads.UserDto;
 import com.example.demo.service.IUserService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiResponse;
+
+import io.swagger.annotations.ApiResponses;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @RestController
 @RequestMapping("/api/v1/auth")
+@Api(tags = "Login", value = "UserLogin", description = "Users can Login and Register")
 public class AuthController {
+
+	Logger log = LoggerFactory.getLogger(AuthController.class);
 
 	@Autowired
 	private JwtTokenHelper jwtTokenHelper;
@@ -38,7 +49,10 @@ public class AuthController {
 	private IUserService userService;
 
 	@PostMapping("/login")
+	@ApiResponses(value = { @ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 200, message = "Successful retrieval", response = AuthController.class, responseContainer = "List") })
 	public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest jwtAuthRequest) throws Exception {
+		log.debug("Request for Login", jwtAuthRequest.getUserName());
 		try {
 			this.authenticate(jwtAuthRequest.getUserName(), jwtAuthRequest.getPassword());
 
@@ -58,6 +72,7 @@ public class AuthController {
 	}
 
 	private void authenticate(String userName, String password) {
+		log.debug("Request of authenticate", userName);
 		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 				userName, password);
 		try {
@@ -68,8 +83,11 @@ public class AuthController {
 	}
 
 	@PostMapping("/register")
+	@ApiResponses(value = { @ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 200, message = "Successful retrieval", response = AuthController.class, responseContainer = "List") })
 	public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto) {
 
+		log.debug("Request for register", userDto.getId());
 		UserDto registeredUser = this.userService.registerNewUser(userDto);
 		return new ResponseEntity<UserDto>(registeredUser, HttpStatus.CREATED);
 

@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,6 +22,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@ApiModel
 public class Category {
 	
 	@Id

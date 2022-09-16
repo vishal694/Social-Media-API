@@ -48,21 +48,25 @@ public class UserServiceImpl implements IUserService {
 
 //	@Async
 	@Override
-	public UserDto updateuser(UserDto userdto, Integer userId) {
+	public UserDto updateuser(UserDto userdto, Integer userId, String email) {
 
-		User user = this.userRepo.findById(userId)
-				.orElseThrow(() -> new ResourceNotException("User", "User Id", userId));
-		user.setName(userdto.getName());
-		user.setEmail(userdto.getEmail());
- 		user.setPassword(userdto.getPassword());
-		user.setAbout(userdto.getAbout());
+		if (email.equals(userdto.getEmail())) {
+			User user = this.userRepo.findById(userId)
+					.orElseThrow(() -> new ResourceNotException("User", "User Id", userId));
+			user.setName(userdto.getName());
+			user.setEmail(userdto.getEmail());
+			user.setPassword(userdto.getPassword());
+			user.setAbout(userdto.getAbout());
 
-		User updateUser = this.userRepo.save(user);
-		UserDto userDto1 = this.userTODto(updateUser);
-		return userDto1;
+			User updateUser = this.userRepo.save(user);
+			UserDto userDto1 = this.userTODto(updateUser);
+			return userDto1;
+		}else {
+			return null;
+		}
 	}
 
-	//@Async
+	// @Async
 	@Override
 	public UserDto getUserbyId(Integer userId) {
 		User user = this.userRepo.findById(userId)

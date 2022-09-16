@@ -10,7 +10,7 @@ public interface IUserService {
 
 	UserDto createuser(UserDto userdto);
 
-	UserDto updateuser(UserDto userdto, Integer userId);
+	UserDto updateuser(UserDto userdto, Integer userId, String email);
 
 	UserDto getUserbyId(Integer userId);
 
