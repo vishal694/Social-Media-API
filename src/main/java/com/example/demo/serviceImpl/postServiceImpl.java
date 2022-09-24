@@ -12,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -126,7 +125,7 @@ public class postServiceImpl implements IPostService {
 		return postDto;
 	}
 
-	@Async
+//	@Async
 	@Override
 	public List<PostDto> getPostByUser(Integer userId) {
 		User user = this.userRepo.findById(userId)

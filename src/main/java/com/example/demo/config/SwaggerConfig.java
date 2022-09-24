@@ -39,15 +39,14 @@ public class SwaggerConfig {
 	public Docket api() {
 
 		return new Docket(DocumentationType.SWAGGER_2).apiInfo(metaData()).securityContexts(securityContext())
-				.securitySchemes(Arrays.asList(apiKey())).select().apis(RequestHandlerSelectors.any())
+				.securitySchemes(Arrays.asList(apiKey())).select().apis(RequestHandlerSelectors.basePackage("com.example.demo.controller"))
 				.paths(PathSelectors.any()).build();
 
 	}
 
 	private ApiInfo metaData() {
-		return new ApiInfoBuilder().title("Simple Blog Apis").description("\"Swagger configuration for application \"")
-				.version("1.1.0").license("Apache 2.0").licenseUrl("https://www.apache.org/licenses/LICENSE-2.0\"")
-				.build();
+		return new ApiInfoBuilder().title("Social Media API").description("\"Swagger configuration for application \"")
+				.version("V1.0").license("V.JET").build();
 	}
 
 }

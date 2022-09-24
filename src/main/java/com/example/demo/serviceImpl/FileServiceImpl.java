@@ -8,16 +8,33 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.UUID;
 
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.bean.LoadFile;
 import com.example.demo.service.IFileService;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import com.mongodb.client.gridfs.model.GridFSFile;
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.gridfs.GridFsOperations;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+
 
 @Service
 public class FileServiceImpl implements IFileService {
+
+//	@Async
+
+	@Autowired
+	private GridFsTemplate template;
 	
-	@Async
+	@Autowired
+    private GridFsOperations operations;
+
 	@Override
 	public String uploadImage(String path, MultipartFile file) throws IOException {
 
@@ -43,7 +60,7 @@ public class FileServiceImpl implements IFileService {
 
 	}
 
-	@Async
+//	@Async
 	@Override
 	public InputStream getResource(String path, String fileName) throws IOException {
 		String fullPath = path + File.separator + fileName;
@@ -52,4 +69,31 @@ public class FileServiceImpl implements IFileService {
 		return is;
 	}
 
+	@Override
+	public String addFile(MultipartFile upload) throws IOException {
+		DBObject metadata = new BasicDBObject();
+		metadata.put("fileSize", upload.getSize());
+
+		Object fileID = template.store(upload.getInputStream(), upload.getOriginalFilename(), upload.getContentType(),
+				metadata);
+
+		return fileID.toString();
+	}
+
+	@Override
+	public LoadFile downloadFile(String id) throws IOException {
+		GridFSFile gridFSFile = template.findOne( new Query(Criteria.where("_id").is(id)) );
+		
+		LoadFile loadFile = new LoadFile();
+		if (gridFSFile != null && gridFSFile.getMetadata() != null) {
+            loadFile.setFilename( gridFSFile.getFilename() );
+
+            loadFile.setFileType( gridFSFile.getMetadata().get("_contentType").toString() );
+
+            loadFile.setFileSize( gridFSFile.getMetadata().get("fileSize").toString() );
+
+            loadFile.setFile( IOUtils.toByteArray(operations.getResource(gridFSFile).getInputStream()) );
+        }
+		return loadFile;
+	}
 }
