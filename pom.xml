@@ -135,13 +135,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<!-- Starter dependency -->
-		<dependency>
-			<groupId>com.github.rbaul</groupId>
-			<artifactId>activity-log-spring-boot-starter</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
 	</dependencies>
 
 	<build>

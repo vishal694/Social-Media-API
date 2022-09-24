@@ -3,10 +3,10 @@ package com.example.demo.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.github.rbaul.spring.boot.activity_log.config.EnableActivityLog;
+//import com.github.rbaul.spring.boot.activity_log.config.EnableActivityLog;
 
 @Configuration
-@EnableActivityLog
+//@EnableActivityLog
 public class ActivityLogConfig {
 	
 	@Bean
