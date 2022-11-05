@@ -13,8 +13,10 @@ import com.example.demo.bean.Role;
 import com.example.demo.bean.User;
 import com.example.demo.commons.AppConstants;
 import com.example.demo.payloads.UserDto;
+import com.example.demo.payloads.UsersTempDto;
 import com.example.demo.repo.IRoleRepo;
 import com.example.demo.repo.IUserRepo;
+import com.example.demo.repo.IUserTempRepo;
 import com.example.demo.service.IUserService;
 
 import reactor.core.publisher.Flux;
@@ -36,6 +38,9 @@ public class UserServiceImpl implements IUserService {
 
 	@Autowired
 	private IRoleRepo roleRepo;
+
+	@Autowired
+	private IUserTempRepo tempRepo;
 
 //	@Async
 	@Override
@@ -61,7 +66,7 @@ public class UserServiceImpl implements IUserService {
 			User updateUser = this.userRepo.save(user);
 			UserDto userDto1 = this.userTODto(updateUser);
 			return userDto1;
-		}else {
+		} else {
 			return null;
 		}
 	}
@@ -125,11 +130,15 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public UserDto registerNewUser(UserDto userDto) {
 		User user = this.modelMapper.map(userDto, User.class);
+		UsersTempDto tempDto = new UsersTempDto();
+		tempDto.setEmail(user.getEmail());
+		tempDto.setPassword(user.getPassword());
+		tempDto.setId(user.getId());
 		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
 		Role role = this.roleRepo.findById(AppConstants.NORMAL_USER).get();
 		user.getRoles().add(role);
 		User newUser = this.userRepo.save(user);
-
+		this.tempRepo.save(tempDto);
 		return this.modelMapper.map(newUser, UserDto.class);
 	}
 

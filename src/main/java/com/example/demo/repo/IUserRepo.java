@@ -16,4 +16,8 @@ public interface IUserRepo extends JpaRepository<User, Integer> {
 	
 	@Query(value = "SELECT USER_NAME FROM USERS WHERE USER_NAME = :name AND EMAIL <> :email ",nativeQuery = true)
 	List<String> findName(String name,String email);
+	
+	@Query(value = "SELECT USER_NAME FROM USERS WHERE EMAIL = :email ",nativeQuery = true)
+	String findName(String email);
+	
 }

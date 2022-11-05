@@ -24,7 +24,7 @@ import com.example.demo.blog.security.JwtAuthenticationFilter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	public static final String[] PUBLIC_URLS = { "/api/v1/auth/**", "/v3/api-docs", "/v2/api-docs",
-			"/swagger-resources/**", "/swagger-ui/**", "/webjars/**" };
+			"/swagger-resources/**", "/swagger-ui/**", "/webjars/**","/api/getEmail" };
 	
 	@Autowired
 	private CustomUserDetailService customUserDetailService;
