@@ -49,7 +49,7 @@ public class getPasswordServiceImpl implements IGetPasswordService {
 			helper.setTo(request.getTo());
 			helper.setText("Hi " + userName + "," + " Your Account password is " + password, true);
 			helper.setSubject("View: Account Password for Your Social Media API Password");
-			//helper.setFrom("");
+			helper.setFrom("");
 			sender.send(message);
 
 			response.setMessage("mail send to : " + request.getTo());

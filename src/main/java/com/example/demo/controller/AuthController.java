@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.bean.JwtAuthRequest;
 import com.example.demo.blog.security.JwtAuthResponse;
 import com.example.demo.blog.security.JwtTokenHelper;
+import com.example.demo.config.WelcomeMail;
 import com.example.demo.exception.ApiException;
 import com.example.demo.payloads.UserDto;
 import com.example.demo.service.IUserService;
@@ -25,6 +26,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiResponse;
 
 import io.swagger.annotations.ApiResponses;
+
+import java.io.IOException;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +53,9 @@ public class AuthController {
 
 	@Autowired
 	private IUserService userService;
+	
+	@Autowired
+	private WelcomeMail welcomeMail;
 
 	@PostMapping("/login")
 	@ApiResponses(value = { @ApiResponse(code = 500, message = "Server error"),
@@ -85,9 +94,10 @@ public class AuthController {
 	@PostMapping("/register")
 	@ApiResponses(value = { @ApiResponse(code = 500, message = "Server error"),
 			@ApiResponse(code = 200, message = "Successful retrieval", response = AuthController.class, responseContainer = "List") })
-	public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto) {
+	public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto) throws AddressException, MessagingException, IOException {
 
 		log.debug("Request for register", userDto.getId());
+		welcomeMail.sendMail(userDto.getEmail());
 		UserDto registeredUser = this.userService.registerNewUser(userDto);
 		return new ResponseEntity<UserDto>(registeredUser, HttpStatus.CREATED);
 
